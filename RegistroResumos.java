@@ -5,6 +5,7 @@ public class RegistroResumos {
     public RegistroResumos(int numeroDeResumos){
         this.numeroDeResumos = numeroDeResumos;
     }
+
     public void adiciona(String tema, String resumo){
         while(resumos.length < numeroDeResumos){
             resumos[indice][0] = tema;
