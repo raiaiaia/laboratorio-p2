@@ -6,15 +6,18 @@ public class Disciplina {
     boolean aprovado;
     double mediaAluno;
     public Disciplina(String nomeDisciplina){
+
         this.nomeDisciplina = nomeDisciplina;
     }
-    public void cadastraHoras(int horasCadastradas){
+    void cadastraHoras(int horasCadastradas){
+
         this.horasCadastradas = horasCadastradas;
     }
-    public void cadastraNota(int nota, double valorNota){
+    void cadastraNota(int nota, double valorNota){
+
         notas[nota - 1] = valorNota;
     }
-    public boolean aprovado(){
+    boolean aprovado(){
         double somaNotas = 0;
 
         for(int i=0; i<4; i++){
@@ -30,7 +33,7 @@ public class Disciplina {
         }
         return aprovado;
     }
-
+    @Override
     public String toString(){
         return nomeDisciplina + " " + horasCadastradas + " " + mediaAluno + " " + Arrays.toString(notas);
     }

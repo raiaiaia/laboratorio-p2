@@ -6,15 +6,15 @@ public class Descanso {
     private int horasDescanso;
     private int numeroSemanas;
 
-    public void defineHorasDescanso(int horasDescanso){
+    void defineHorasDescanso(int horasDescanso){
         this.horasDescanso = horasDescanso;
     }
 
-    public void defineNumeroSemanas(int numeroSemanas){
+    void defineNumeroSemanas(int numeroSemanas){
         this.numeroSemanas = numeroSemanas;
     }
 
-    public String getStatusGeral(){
+    String getStatusGeral(){
 
         if(horasDescanso == 0){
             saida = "cansado";
@@ -30,7 +30,6 @@ public class Descanso {
 
         return saida;
     }
-
 
     public int getNumeroSemanas() {
         return horasDescanso/numeroSemanas;

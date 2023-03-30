@@ -13,11 +13,11 @@ public class RegistroTempoOnline{
         tempoOnlineEsperado = 60 * 2;
     }
 
-    public void adicionaTempoOnline(int tempoOnlineCadastrado){
+    void adicionaTempoOnline(int tempoOnlineCadastrado){
         this.tempoOnlineCadastrado += tempoOnlineCadastrado;
     }
 
-    public boolean atingiuMetaTempoOnline(){
+    boolean atingiuMetaTempoOnline(){
 
         if(tempoOnlineCadastrado >= tempoOnlineEsperado){
             atingiuMetaTempoOnline = true;

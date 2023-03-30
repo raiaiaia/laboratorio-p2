@@ -1,38 +1,64 @@
 public class RegistroResumos {
     private int numeroDeResumos;
-    private String[][] resumos = new String[numeroDeResumos][2];
-    private int indice = 0;
+    private String[] temas;
+    private String[] resumos;
+    private int indiceTema;
+
     public RegistroResumos(int numeroDeResumos){
         this.numeroDeResumos = numeroDeResumos;
+        this.temas =  new String[numeroDeResumos];
+        this.resumos = new String[numeroDeResumos];
     }
 
-    public void adiciona(String tema, String resumo){
-        while(resumos.length < numeroDeResumos){
-            resumos[indice][0] = tema;
-            resumos[indice][1] = resumo;
-            indice++;
+    void adiciona(String tema, String resumo){
+
+        indiceTema = 0;
+
+        if(indiceTema < numeroDeResumos){
+            temas[indiceTema] = tema;
+            resumos[indiceTema] = tema + ": " + resumo;
+        }else{
+            indiceTema = 0;
+            temas[indiceTema] = tema;
+            resumos[indiceTema] = tema + ": " + resumo;
+        }
+        indiceTema++;
+
+    }
+
+    String[] pegaResumos() {
+        return resumos;
+    }
+
+    String[] imprimeResumos(){
+        String[] concatenada = new String[2];
+        String saida = "", saida1 = "";
+
+        saida += "- " + indiceTema + "resumo(s) cadastrado(s)";
+        saida1 += "- ";
+
+        for(int i = 0; i<indiceTema - 1; i++){
+            saida1 += temas[i] + " | ";
         }
 
+        saida1 += temas[indiceTema];
+
+        concatenada[0] = saida;
+        concatenada[1] = saida1;
+
+
+        return concatenada;
     }
 
-    /*
-    public String[] pegaResumos() {
-        return;
+    int conta(){
+        return indiceTema;
     }
 
-    public String imprimeResumos(){
-        return;
+
+    boolean temResumo(String tema){
+        return false;
     }
 
-    public int conta(){
-        return;
-    }
-
-    public boolean temResumo(String tema){
-        return;
-    }
-
-     */
 
 
 }
