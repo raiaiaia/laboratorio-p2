@@ -1,3 +1,4 @@
+package lab02;
 public class RegistroResumos {
     private int numeroDeResumos;
     private String[] temas;

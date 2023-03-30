@@ -3,6 +3,7 @@
  * @author Danielly Rayanne Macedo Lima
  * Matrícula: 122110702
  */
+package lab02;
 
 public class Coisa {
     public static void main(String[] args) {

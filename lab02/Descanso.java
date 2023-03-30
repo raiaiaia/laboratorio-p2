@@ -1,3 +1,4 @@
+package lab02;
 public class Descanso {
     private String status;
 

@@ -1,3 +1,4 @@
+package lab02;
 import java.util.*;
 public class Disciplina {
     private String nomeDisciplina;
