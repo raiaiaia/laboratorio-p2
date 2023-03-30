@@ -1,5 +1,9 @@
 package lab02;
 import java.util.*;
+
+/**
+ * Classe que cadastra horas de estudo e notas dos alunos, além retornar o estado de aprovação.
+ */
 public class Disciplina {
     private String nomeDisciplina;
     private int horasCadastradas;

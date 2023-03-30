@@ -1,4 +1,8 @@
 package lab02;
+
+/**
+ * Classe que registra o tempo passado online dedicado a cada disciplina.
+ */
 public class RegistroTempoOnline{
     private int tempoOnlineEsperado;
     private String nomeDisciplina;

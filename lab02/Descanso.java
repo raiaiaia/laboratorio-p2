@@ -1,4 +1,8 @@
 package lab02;
+
+/**
+ * Classe que contabiliza e registra as horas de descanso do aluno no coISA.
+ */
 public class Descanso {
     private String status;
 

@@ -1,9 +1,13 @@
 package lab02;
+/**
+ *  Classe que implementa e manipula operações no Registro de Resumos do coISA.
+ */
+
 public class RegistroResumos {
     private int numeroDeResumos;
     private String[] temas;
     private String[] resumos;
-    private int indiceTema;
+    private int indiceTema = 0;
 
     public RegistroResumos(int numeroDeResumos){
         this.numeroDeResumos = numeroDeResumos;
@@ -12,8 +16,6 @@ public class RegistroResumos {
     }
 
     void adiciona(String tema, String resumo){
-
-        indiceTema = 0;
 
         if(indiceTema < numeroDeResumos){
             temas[indiceTema] = tema;
@@ -31,24 +33,19 @@ public class RegistroResumos {
         return resumos;
     }
 
-    String[] imprimeResumos(){
-        String[] concatenada = new String[2];
+    String imprimeResumos(){
         String saida = "", saida1 = "";
 
-        saida += "- " + indiceTema + "resumo(s) cadastrado(s)";
+        saida += "- " + indiceTema + " resumo(s) cadastrado(s)\n";
         saida1 += "- ";
 
         for(int i = 0; i<indiceTema - 1; i++){
             saida1 += temas[i] + " | ";
         }
 
-        saida1 += temas[indiceTema];
+        saida1 += temas[--indiceTema];
 
-        concatenada[0] = saida;
-        concatenada[1] = saida1;
-
-
-        return concatenada;
+        return saida + saida1;
     }
 
     int conta(){
@@ -57,6 +54,13 @@ public class RegistroResumos {
 
 
     boolean temResumo(String tema){
+
+        for(int i=0; i<indiceTema; i++){
+            if(tema.equals(temas[i])){
+                return true;
+            }
+        }
+
         return false;
     }
 
