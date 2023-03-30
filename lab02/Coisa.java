@@ -5,6 +5,9 @@
  */
 package lab02;
 
+/**
+ * Classe main do sistema coISA.
+ */
 public class Coisa {
     public static void main(String[] args) {
         registrarDescanso();
