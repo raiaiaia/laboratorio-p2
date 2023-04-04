@@ -2,12 +2,10 @@
  * Laboratório de Programação 2
  * @author Danielly Rayanne Macedo Lima
  * Matrícula: 122110702
+ * Classe main do sistema coISA.
  */
 package lab02;
 
-/**
- * Classe main do sistema coISA.
- */
 public class Coisa {
     public static void main(String[] args) {
         registrarDescanso();
@@ -74,9 +72,9 @@ public class Coisa {
 
         System.out.println();
         System.out.println("Resumos: ");
-        System.out.println(meusResumos.imprimeResumos());
-        System.out.println(meusResumos.temResumo("Classes"));
-        System.out.println(meusResumos.temResumo("Objetos"));
+        //System.out.println(meusResumos.imprimeResumos());
+        //System.out.println(meusResumos.temResumo("Classes"));
+        //System.out.println(meusResumos.temResumo("Objetos"));
 
     }
 }

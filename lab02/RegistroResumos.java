@@ -12,10 +12,11 @@ public class RegistroResumos {
      * Array de String com os títulos dos resumos cadastrados e de tamanho numeroDeResumos.
      */
     private String[] temas;
+
     /**
-     * Array com os resumos na formatação título:conteúdo e de tamanho numeroDeResumos.
+     * Adiciona resumos a Resumos na formatação título:conteúdo e de tamanho numeroDeResumos.
      */
-    private String[] resumos;
+    private Resumos[] resumos;
     /**
      *  Número de resumos já cadastrados.
      */
@@ -27,8 +28,11 @@ public class RegistroResumos {
      */
     public RegistroResumos(int numeroDeResumos){
         this.numeroDeResumos = numeroDeResumos;
-        this.temas =  new String[numeroDeResumos];
-        this.resumos = new String[numeroDeResumos];
+        resumos = new Resumos[numeroDeResumos];
+
+        for(int i=0; i<resumos.length; i++){
+            resumos[i] = new Resumos();
+        }
     }
 
     /**
@@ -39,34 +43,42 @@ public class RegistroResumos {
     void adiciona(String tema, String resumo){
 
         if(indiceTema < numeroDeResumos){
-            temas[indiceTema] = tema;
-            resumos[indiceTema] = tema + ": " + resumo;
+            resumos[indiceTema].setTitulo(tema);
+            resumos[indiceTema].setResumo(resumo);
         }else{
             indiceTema = 0;
-            temas[indiceTema] = tema;
-            resumos[indiceTema] = tema + ": " + resumo;
+            resumos[indiceTema].setTitulo(tema);
+            resumos[indiceTema].setResumo(resumo);
         }
         indiceTema++;
 
     }
     String[] pegaResumos() {
-        return resumos;
+        String[] saida = new String[indiceTema];
+
+        for(int i=0; i< saida.length; i++){
+            saida[i] = resumos[i].toString();
+        }
+        return saida;
     }
 
     /**
      * Método que imprime uma visualização das quantidades de resumos cadastrados e seus respectivos títulos.
      * @return quantidade de resumos e títulos dos resumos.
      */
+
+    /*
     String imprimeResumos(){
         String saida = "";
 
         for(int i = 0; i<indiceTema - 1; i++){
             saida += temas[i] + " | ";
         }
-        saida += temas[--indiceTema];
+        saida += temas[indiceTema - 1];
 
         return "- " + indiceTema + " resumo(s) cadastrado(s)\n" + "- " + saida;
     }
+    */
 
     /**
      * Método que conta o número de resumos cadastrados.
@@ -81,6 +93,8 @@ public class RegistroResumos {
      * @param tema
      * @return boolean true or false.
      */
+
+    /*
     boolean temResumo(String tema){
 
         for(int i=0; i<indiceTema; i++){
@@ -90,5 +104,7 @@ public class RegistroResumos {
         }
         return false;
     }
+     */
+
 
 }
