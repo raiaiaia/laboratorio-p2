@@ -8,10 +8,6 @@ public class RegistroResumos {
      * A quantidade de resumos que podem ser guardadas.
      */
     private int numeroDeResumos;
-    /**
-     * Array de String com os títulos dos resumos cadastrados e de tamanho numeroDeResumos.
-     */
-    private String[] temas;
 
     /**
      * Adiciona resumos a Resumos na formatação título:conteúdo e de tamanho numeroDeResumos.
@@ -20,10 +16,10 @@ public class RegistroResumos {
     /**
      *  Número de resumos já cadastrados.
      */
-    private int indiceTema = 0;
+    private int numResumos = 0;
 
     /**
-     * Atribui valor para numeroDeResumos e inicializa os arrays "tema" e "resumos".
+     * Atribui valor para numeroDeResumos e inicializa o array resumos do tipo Resumos.
      * @param numeroDeResumos
      */
     public RegistroResumos(int numeroDeResumos){
@@ -42,19 +38,23 @@ public class RegistroResumos {
      */
     void adiciona(String tema, String resumo){
 
-        if(indiceTema < numeroDeResumos){
-            resumos[indiceTema].setTitulo(tema);
-            resumos[indiceTema].setResumo(resumo);
+        if(numResumos < numeroDeResumos){
+            resumos[numResumos].setTitulo(tema);
+            resumos[numResumos].setResumo(resumo);
         }else{
-            indiceTema = 0;
-            resumos[indiceTema].setTitulo(tema);
-            resumos[indiceTema].setResumo(resumo);
+            numResumos = 0;
+            resumos[numResumos].setTitulo(tema);
+            resumos[numResumos].setResumo(resumo);
         }
-        indiceTema++;
-
+        numResumos++;
     }
+
+    /**
+     * Retorna todos os resumos cadastrados na formatação do toString() de Resumos.
+     * @return saida
+     */
     String[] pegaResumos() {
-        String[] saida = new String[indiceTema];
+        String[] saida = new String[numResumos];
 
         for(int i=0; i< saida.length; i++){
             saida[i] = resumos[i].toString();
@@ -63,48 +63,40 @@ public class RegistroResumos {
     }
 
     /**
-     * Método que imprime uma visualização das quantidades de resumos cadastrados e seus respectivos títulos.
+     * Método que imprime a visualização das quantidades de resumos cadastrados e seus respectivos títulos.
      * @return quantidade de resumos e títulos dos resumos.
      */
-
-    /*
     String imprimeResumos(){
         String saida = "";
 
-        for(int i = 0; i<indiceTema - 1; i++){
-            saida += temas[i] + " | ";
+        for(int i = 0; i<numResumos - 1; i++){
+            saida += resumos[i].getTitulo() + " | ";
         }
-        saida += temas[indiceTema - 1];
+        saida += resumos[numResumos - 1].getTitulo();
 
-        return "- " + indiceTema + " resumo(s) cadastrado(s)\n" + "- " + saida;
+        return "- " + numResumos + " resumo(s) cadastrado(s)\n" + "- " + saida;
     }
-    */
 
     /**
-     * Método que conta o número de resumos cadastrados.
-     * @return
+     * Retorna o número de resumos cadastrados até então.
+     * @return numResumos
      */
-    int conta(){
-        return indiceTema;
-    }
+    int conta(){return numResumos;}
 
     /**
      * Verifica se há resumos cadastrados.
      * @param tema
      * @return boolean true or false.
      */
-
-    /*
     boolean temResumo(String tema){
-
-        for(int i=0; i<indiceTema; i++){
-            if(tema.equals(temas[i])){
+        for(int i=0; i<numResumos; i++){
+            if(tema.equals(resumos[i].getTitulo())){
                 return true;
             }
         }
         return false;
     }
-     */
+
 
 
 }

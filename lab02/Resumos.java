@@ -5,8 +5,13 @@ package lab02;
  */
 
 public class Resumos {
-
+    /**
+     * Recebe o conteúdo do resumo.
+     */
     private String resumo;
+    /**
+     * Recebe o título do resumo.
+     */
     private String titulo;
 
     /**
@@ -21,7 +26,7 @@ public class Resumos {
         this.resumo = resumo;
     }
 
-    public String getTitulo(String titulo) {
+    public String getTitulo() {
         return titulo;
     }
 
