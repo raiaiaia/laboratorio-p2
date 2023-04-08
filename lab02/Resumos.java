@@ -1,21 +1,15 @@
 package lab02;
 
 /**
- *
+ *  Classe que cria e retorna os resumos cadastrados nas disciplinas do coISA.
  */
 
 public class Resumos {
-    /**
-     * Recebe o conteúdo do resumo.
-     */
     private String resumo;
-    /**
-     * Recebe o título do resumo.
-     */
     private String titulo;
 
     /**
-     * Construtor de resumos que inicializa vazio.
+     * Inicialização de um Resumo com título e conteúdo vazios.
      */
     public Resumos(){
         resumo = "";
@@ -37,7 +31,6 @@ public class Resumos {
     /**
      * Método toString() sobrescrito que imprime o
      * título e o resumo na formatação esperada.
-     * @return
      */
     @Override
     public String toString() {

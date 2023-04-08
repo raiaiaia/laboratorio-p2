@@ -4,21 +4,14 @@ package lab02;
  * Classe que contabiliza e registra as horas de descanso do aluno no coISA.
  */
 public class Descanso {
-    /**
-     * Status de descanso do aluno.
-     */
     private String statusGeral;
-    /**
-     *  Quantidade de horas descansadas do aluno.
-     */
     private int horasDescanso;
-    /**
-     *  Números de semanas de descanso para ter a relação horas/semanas de descanso do aluno.
-     */
     private int numeroSemanas;
+    private String valor;
+    boolean temEmoji = false;
 
     /**
-     * Atribuição de valor ao atributo.
+     * Inicializa horasDescanso com o valor recebido no parâmetro.
      * @param horasDescanso
      */
     void defineHorasDescanso(int horasDescanso){
@@ -26,25 +19,40 @@ public class Descanso {
     }
 
     /**
-     * Atriibuição de valor ao atributo.
+     * Inicializa numeroSemanas com o valor recebido no parâmetro.
      * @param numeroSemanas
      */
     void defineNumeroSemanas(int numeroSemanas){
         this.numeroSemanas = numeroSemanas;
     }
 
+    void definirEmoji(String valor){
+        temEmoji = true;
+        this.valor = valor;
+    }
+
     /**
-     *  Retorna o status de descanso a depender das horas semanais descansadas.
-     * @return String com o estado de descanso.
+     * @return Status de cansado do aluno a depender da quantidade de horas descansadas cadastradas.
      */
     String getStatusGeral(){
-        if(horasDescanso == 0){
-            statusGeral = "cansado";
+        if(horasDescanso == 0 && temEmoji){
+            statusGeral = "cansado " + valor;
+        }else{
+            statusGeral = "cansado ";
         }
+
         if(numeroSemanas > 0){
-            if((horasDescanso/numeroSemanas) < 26){
+
+            if((horasDescanso/numeroSemanas) < 26 && temEmoji) {
+                statusGeral = "cansado " + valor;
+
+            }else if((horasDescanso/numeroSemanas) < 26){
                 statusGeral = "cansado";
-            }else if((horasDescanso/numeroSemanas) >= 26) {
+
+            }else if((horasDescanso/numeroSemanas) >= 26 && temEmoji) {
+                statusGeral = "descansado " + valor;
+
+            }else if((horasDescanso/numeroSemanas) >= 26){
                 statusGeral = "descansado";
             }
         }

@@ -1,28 +1,15 @@
 package lab02;
-
 /**
  * Classe que registra o tempo passado online dedicado a cada disciplina.
  */
 public class RegistroTempoOnline{
-    /**
-     * Tempo de estudo online esperado para a disciplina.
-     */
     private int tempoOnlineEsperado;
-    /**
-     * Nome da disciplina cadastrada.
-     */
     private String nomeDisciplina;
-    /**
-     * Verificador de que o tempo mínimo online foi atingido ou não.
-     */
     private boolean atingiuMetaTempoOnline;
-    /**
-     *  Guarda a soma de todos os registro de temposOnline cadastrados por aluno ao longo do tempo.
-     */
     private int tempoOnlineCadastrado;
 
     /**
-     * Atribui valor aos atributos do nome da disciplina e ao tempo online esperado definido pela matéria.
+     * Inicializa nomeDisciplina e tempoOnlineEsperado com os valores recebidos no parâmetro..
      * @param nomeDisciplina
      * @param tempoOnlineEsperado
      */
@@ -32,7 +19,7 @@ public class RegistroTempoOnline{
     }
 
     /**
-     * Atribui valor aos atributos do nome da disciplina com tempo online da matéria definido com padrão 120h.
+     * Inicializa a disciplina cadastrada com o tempo online da matéria definido com padrão 120h.
      * @param nomeDisciplina
      */
     public RegistroTempoOnline(String nomeDisciplina){
@@ -60,6 +47,11 @@ public class RegistroTempoOnline{
         }
         return atingiuMetaTempoOnline;
     }
+    /**
+     * Método toString() sobrescrito que imprime
+     * o "status" de tempo esperado e cadastrado
+     * de cada disciplina.
+     */
     public String toString(){
         return nomeDisciplina + " " + tempoOnlineCadastrado + " " + tempoOnlineEsperado;
     }

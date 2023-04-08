@@ -4,22 +4,13 @@ package lab02;
  */
 
 public class RegistroResumos {
-    /**
-     * A quantidade de resumos que podem ser guardadas.
-     */
     private int numeroDeResumos;
-
-    /**
-     * Adiciona resumos a Resumos na formatação título:conteúdo e de tamanho numeroDeResumos.
-     */
     private Resumos[] resumos;
-    /**
-     *  Número de resumos já cadastrados.
-     */
     private int numResumos = 0;
 
     /**
-     * Atribui valor para numeroDeResumos e inicializa o array resumos do tipo Resumos.
+     * Implementação para a inicialização do armazenamento de resumos de acordo
+     * com o valor recebido no parâmetro.
      * @param numeroDeResumos
      */
     public RegistroResumos(int numeroDeResumos){
@@ -33,6 +24,9 @@ public class RegistroResumos {
 
     /**
      * Adiciona resumos no array resumos.
+     * Caso seja adicionado mais resumos que o suportado pelo array
+     * ele começa a sobrescrever nos espaços de memória a partir da
+     * posição 0.
      * @param tema
      * @param resumo
      */
