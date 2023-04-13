@@ -87,10 +87,10 @@ public class MainAgenda {
 	 */
 	private static void listaContatos(Agenda agenda) {
 		System.out.println("\nLista de contatos: ");
-		String[] contatos = agenda.getContatos();
-		for (int i = 0; i < contatos.length; i++) {
-			if (contatos[i] != null) {
-				System.out.println(formataContato(i, contatos[i]));
+		Contato[] contatos = agenda.getContatos();
+		for (int i = 1; i <= agenda.getNumContatos(); i++) {
+			if (contatos[i].getNome() != " ") {
+				System.out.println(formataContato(i, contatos[i].getNome()));
 			}
 		}
 	}
@@ -104,7 +104,7 @@ public class MainAgenda {
 	private static void exibeContato(Agenda agenda, Scanner scanner) {
 		System.out.print("\nQual contato> ");
 		int posicao = scanner.nextInt();
-		String contato = agenda.getContato(posicao);
+		Contato contato = agenda.getContato(posicao);
 		System.out.println("Dados do contato:\n" + contato);
 	}
 
