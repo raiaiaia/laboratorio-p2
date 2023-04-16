@@ -20,7 +20,7 @@ public class Agenda {
 			contatos[i] = new Contato();
 		}
 	}
-	
+
 	/**
 	 * Acessa a lista de contatos mantida.
 	 * @return O array de contatos.
@@ -44,13 +44,21 @@ public class Agenda {
 	}
 
 	/**
-	 * Cadastra um contato em uma posição. Um cadastro em uma posição que já existe sobrescreve o anterior. 
+	 * Cadastra um contato em uma posição. Um cadastro em uma posição que já existe sobrescreve o anterior.
 	 * @param posicao Posição do contato.
 	 * @param nome Nome do contato.
 	 * @param sobrenome Sobrenome do contato.
 	 * @param telefone Telefone do contato.
 	 */
-	public void cadastraContato(int posicao, String nome, String sobrenome, String telefone) {
+	public void cadastraContato(int posicao, String nome, String sobrenome, String telefone) throws IllegalArgumentException{
+
+		if(posicao < 1 || posicao > 100){
+			throw new IllegalArgumentException("POSIÇÃO INVÁLIDA");
+		}
+		if(nome.isBlank() || telefone.isBlank()){
+			throw new IllegalArgumentException("CONTATO INVÁLIDO");
+		}
+
 		contatos[posicao].setNome(nome);
 		contatos[posicao].setSobrenome(sobrenome);
 		contatos[posicao].setNumero(telefone);
