@@ -1,5 +1,6 @@
 package agenda;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 /**
@@ -10,7 +11,9 @@ import java.util.Locale;
  */
 public class Agenda {
 	private static final int TAMANHO_AGENDA = 100;
+	private static final int TAMANHO_FAVORITOS = 10;
 	private Contato[] contatos;
+	private String[] favoritos = new String[TAMANHO_FAVORITOS];
 	int numContatos = 0;
 
 	/**
@@ -61,7 +64,7 @@ public class Agenda {
 			throw new IllegalArgumentException("CONTATO INVÁLIDO");
 		}
 		for(Contato c: getContatos()){
-			if(c.getNome().equals(nome) && c.getSobrenome().equals(sobrenome)){
+			if(c.getNome().toLowerCase().equals(nome) && c.getSobrenome().toLowerCase().equals(sobrenome)){
 				throw new IllegalArgumentException("CONTATO JÁ CADASTRADO");
 			}
 		}
@@ -71,9 +74,58 @@ public class Agenda {
 		contatos[posicao].setNumero(telefone);
 		numContatos++;
 	}
+	public void adicionaFavorito(int contatoPosicao, int posicaoFavorito)throws IllegalArgumentException{
+
+		for(int i=0; i<favoritos.length; i++){
+			if(favoritos[i] == null){
+				favoritos[i] = " ";
+			}
+		}
+		Contato contato = contatos[contatoPosicao];
+		favoritos[posicaoFavorito] =  formataFavorito("❤", contato.getNome(), contato.getSobrenome(), contato.getNumero());
+	}
+
+
+	public String[] listaFavoritos(){
+		return favoritos;
+	}
+
+	public void exibeContato(Contato contato) throws IllegalArgumentException{
+
+		if(contato.getNome().isBlank()){
+			throw new IllegalArgumentException("POSIÇÃO INVÁLIDA");
+		}
+	}
+
+	public ArrayList<String> listaContatos(){
+		Contato[] contatos = getContatos();
+		ArrayList<String> contatosExistentes = new ArrayList<>();
+
+		for(int i = 0; i < contatos.length; i++) {
+			if (!contatos[i].getNome().isBlank()) {
+				contatosExistentes.add(formataContato(i, contatos[i].getNome()));
+			}
+		}
+		return contatosExistentes;
+	}
 
 	public int getNumContatos(){
 		return numContatos;
 	}
 
+
+	/**
+	 * Formata um contato para impressão na interface.
+	 *
+	 * @param posicao A posição do contato (que é exibida)/
+	 * @param contato O contato a ser impresso.
+	 * @return A String formatada.
+	 */
+	private static String formataContato(int posicao, String contato) {
+		return posicao + " - " + contato;
+	}
+
+	private static String formataFavorito(String coracao, String nome, String sobrenome, String numero){
+		return coracao + " " + nome + " " + sobrenome + "\n" + numero;
+	}
 }

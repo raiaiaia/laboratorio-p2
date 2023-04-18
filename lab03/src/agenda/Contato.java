@@ -36,9 +36,10 @@ public class Contato {
     public String getSobrenome(){
         return sobrenome;
     }
+    public String getNumero(){ return numero; }
 
     public boolean equals(String nome, String sobrenome) {
-        return getNome().equals(nome) && getSobrenome().equals(sobrenome);
+        return getNome().equals(nome.toLowerCase()) && getSobrenome().equals(sobrenome.toLowerCase());
     }
 
     @Override

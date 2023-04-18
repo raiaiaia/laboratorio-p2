@@ -2,6 +2,7 @@ package agenda;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -48,6 +49,9 @@ public class MainAgenda {
 						"(C)adastrar Contato\n" +
 						"(L)istar Contatos\n" +
 						"(E)xibir Contato\n" +
+						"(F)avoritos\n"+
+						"(A)dicionar Favorito\n"+
+						"(R)emover Favorito\n"+
 						"(S)air\n" +
 						"\n" +
 						"Opção> ");
@@ -67,10 +71,16 @@ public class MainAgenda {
 				cadastraContato(agenda, scanner);
 				break;
 			case "L":
-				listaContatos(agenda);
+				listaContatos(agenda.listaContatos());
 				break;
 			case "E":
 				exibeContato(agenda, scanner);
+				break;
+			case "F":
+				listaFavoritos(agenda.listaFavoritos());
+				break;
+			case "A":
+				adicionaFavorito(agenda, scanner);
 				break;
 			case "S":
 				sai();
@@ -85,12 +95,19 @@ public class MainAgenda {
 	 *
 	 * @param agenda A agenda sendo manipulada.
 	 */
-	private static void listaContatos(Agenda agenda) {
+	private static void listaContatos(ArrayList<String> contatosExistentes) {
 		System.out.println("\nLista de contatos: ");
-		Contato[] contatos = agenda.getContatos();
-		for (int i = 1; i <= agenda.getNumContatos(); i++) {
-			if (contatos[i].getNome() != " ") {
-				System.out.println(formataContato(i, contatos[i].getNome()));
+
+		for(String s: contatosExistentes){
+			System.out.println(s);
+		}
+
+	}
+
+	private static void listaFavoritos(String[] favoritos){
+		for(int i =0; i < favoritos.length; i++) {
+			if (!favoritos[i].isBlank()) {
+				System.out.println(favoritos[i]);
 			}
 		}
 	}
@@ -105,18 +122,14 @@ public class MainAgenda {
 		System.out.print("\nQual contato> ");
 		int posicao = scanner.nextInt();
 		Contato contato = agenda.getContato(posicao);
-		System.out.println("Dados do contato:\n" + contato);
-	}
+		System.out.println("Dados do contato:\n" + contato.toString());
 
-	/**
-	 * Formata um contato para impressão na interface.
-	 *
-	 * @param posicao A posição do contato (que é exibida)/
-	 * @param contato O contato a ser impresso.
-	 * @return A String formatada.
-	 */
-	private static String formataContato(int posicao, String contato) {
-		return posicao + " - " + contato;
+		try {
+			agenda.exibeContato(contato);
+		}catch (IllegalArgumentException e){
+			System.out.println(e.getMessage());
+		}
+
 	}
 
 	/**
@@ -141,6 +154,22 @@ public class MainAgenda {
 			System.out.println(e.getMessage());
 		}
 
+	}
+
+	private static void adicionaFavorito(Agenda agenda, Scanner scanner){
+		System.out.println("\nContato> ");
+		int contatoPosicao = scanner.nextInt();
+		System.out.println("\nPosição> ");
+		int posicaoFavorito = scanner.nextInt();
+
+		String mensagemCadastro = "CONTATO FAVORITADO NA POSIÇÃO " + posicaoFavorito;
+		System.out.println(mensagemCadastro);
+
+		try {
+			agenda.adicionaFavorito(contatoPosicao, posicaoFavorito);
+		}catch (IllegalArgumentException e){
+			System.out.println(e.getMessage());
+		}
 	}
 
 	/**
