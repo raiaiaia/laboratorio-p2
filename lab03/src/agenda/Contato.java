@@ -1,5 +1,8 @@
 package agenda;
 
+import java.util.Locale;
+import java.util.Objects;
+
 public class Contato {
     private String nome;
     private String sobrenome;
@@ -30,6 +33,18 @@ public class Contato {
         return nome;
     }
 
+    public String getSobrenome(){
+        return sobrenome;
+    }
+
+    public boolean equals(String nome, String sobrenome) {
+        return getNome().equals(nome) && getSobrenome().equals(sobrenome);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNome(), sobrenome);
+    }
 
     @Override
     public String toString(){

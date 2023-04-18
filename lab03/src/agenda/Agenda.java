@@ -1,5 +1,7 @@
 package agenda;
 
+import java.util.Locale;
+
 /**
  * Uma agenda que mantém uma lista de contatos com posições. Podem existir 100 contatos. 
  * 
@@ -55,8 +57,13 @@ public class Agenda {
 		if(posicao < 1 || posicao > 100){
 			throw new IllegalArgumentException("POSIÇÃO INVÁLIDA");
 		}
-		if(nome.isBlank() || telefone.isBlank()){
+		if(nome.isBlank() || telefone.isBlank()) {
 			throw new IllegalArgumentException("CONTATO INVÁLIDO");
+		}
+		for(Contato c: getContatos()){
+			if(c.getNome().equals(nome) && c.getSobrenome().equals(sobrenome)){
+				throw new IllegalArgumentException("CONTATO JÁ CADASTRADO");
+			}
 		}
 
 		contatos[posicao].setNome(nome);
