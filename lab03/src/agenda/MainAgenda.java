@@ -82,6 +82,9 @@ public class MainAgenda {
 			case "A":
 				adicionaFavorito(agenda, scanner);
 				break;
+			case "R":
+				removeFavorito(agenda, scanner);
+				break;
 			case "S":
 				sai();
 				break;
@@ -93,7 +96,7 @@ public class MainAgenda {
 	/**
 	 * Imprime lista de contatos da agenda.
 	 *
-	 * @param agenda A agenda sendo manipulada.
+	 * @param
 	 */
 	private static void listaContatos(ArrayList<String> contatosExistentes) {
 		System.out.println("\nLista de contatos: ");
@@ -104,11 +107,9 @@ public class MainAgenda {
 
 	}
 
-	private static void listaFavoritos(String[] favoritos){
-		for(int i =0; i < favoritos.length; i++) {
-			if (!favoritos[i].isBlank()) {
-				System.out.println(favoritos[i]);
-			}
+	private static void listaFavoritos(ArrayList<String> favoritos){
+		for(String s: favoritos){
+			System.out.println(s);
 		}
 	}
 
@@ -122,15 +123,18 @@ public class MainAgenda {
 		System.out.print("\nQual contato> ");
 		int posicao = scanner.nextInt();
 		Contato contato = agenda.getContato(posicao);
-		System.out.println("Dados do contato:\n" + contato.toString());
+
+		System.out.println("Dados do contato:\n");
+		System.out.println(agenda.exibeContato(contato, posicao));
 
 		try {
-			agenda.exibeContato(contato);
+			agenda.exibeContato(contato, posicao);
 		}catch (IllegalArgumentException e){
 			System.out.println(e.getMessage());
 		}
 
 	}
+
 
 	/**
 	 * Cadastra um contato na agenda.
@@ -162,14 +166,16 @@ public class MainAgenda {
 		System.out.println("\nPosição> ");
 		int posicaoFavorito = scanner.nextInt();
 
-		String mensagemCadastro = "CONTATO FAVORITADO NA POSIÇÃO " + posicaoFavorito;
-		System.out.println(mensagemCadastro);
-
+		System.out.println(agenda.adicionaFavorito(contatoPosicao, posicaoFavorito));
 		try {
 			agenda.adicionaFavorito(contatoPosicao, posicaoFavorito);
 		}catch (IllegalArgumentException e){
 			System.out.println(e.getMessage());
 		}
+	}
+
+	public static void removeFavorito(Agenda agenda, Scanner scanner){
+
 	}
 
 	/**

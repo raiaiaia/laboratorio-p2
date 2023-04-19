@@ -29,6 +29,10 @@ public class Contato {
         this.numero = numero;
     }
 
+    public int getPosicao() {
+        return posicao + 1;
+    }
+
     public String getNome() {
         return nome;
     }

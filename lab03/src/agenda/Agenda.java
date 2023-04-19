@@ -13,16 +13,22 @@ public class Agenda {
 	private static final int TAMANHO_AGENDA = 100;
 	private static final int TAMANHO_FAVORITOS = 10;
 	private Contato[] contatos;
-	private String[] favoritos = new String[TAMANHO_FAVORITOS];
+	private Contato[] favoritos;
 	int numContatos = 0;
 
 	/**
 	 * Cria uma agenda.
 	 */
 	public Agenda() {
-		contatos = new Contato[TAMANHO_AGENDA];
+		this.contatos = new Contato[TAMANHO_AGENDA];
+		this.favoritos = new Contato[TAMANHO_FAVORITOS];
+
 		for(int i=0; i<contatos.length; i++){
 			contatos[i] = new Contato();
+		}
+
+		for(int i=0; i<favoritos.length; i++){
+			favoritos[i] = new Contato();
 		}
 	}
 
@@ -38,6 +44,14 @@ public class Agenda {
 		}
 		return saida;
 	}
+
+	public Contato[] getFavoritos() {
+		Contato[] saida = new Contato[TAMANHO_FAVORITOS];
+
+		for(int i=0; i < saida.length; i++){
+			saida[i] = favoritos[i];
+		}
+			return saida;}
 
 	/**
 	 * Acessa os dados de um contato específico.
@@ -74,27 +88,52 @@ public class Agenda {
 		contatos[posicao].setNumero(telefone);
 		numContatos++;
 	}
-	public void adicionaFavorito(int contatoPosicao, int posicaoFavorito)throws IllegalArgumentException{
 
-		for(int i=0; i<favoritos.length; i++){
-			if(favoritos[i] == null){
-				favoritos[i] = " ";
+	public String adicionaFavorito(int contatoPosicao, int posicaoFavorito)throws IllegalArgumentException{
+
+		if(posicaoFavorito < 1 || posicaoFavorito > 10){
+			throw new IllegalArgumentException("POSIÇÃO INVÁLIDA");
+		}
+		if(favoritado(contatoPosicao)){
+			throw new IllegalArgumentException("CONTATO JÁ É FAVORITO");
+		}
+		if( !(favoritado(contatoPosicao)) ){
+			favoritos[posicaoFavorito] = contatos[contatoPosicao];
+		}
+
+		return "CONTATO FAVORITADO NA POSIÇÃO " + posicaoFavorito;
+	}
+
+	public ArrayList<String> listaFavoritos(){
+		Contato[] favoritos = getFavoritos();
+		ArrayList<String> favoritosExistentes = new ArrayList<>();
+		for(int i=0; i < favoritos.length; i++){
+			if( !(favoritos[i].getNome().isBlank()) ){
+				favoritosExistentes.add(formataFavorito("❤", favoritos[i].getNome(), favoritos[i].getSobrenome(), favoritos[i].getNumero()));
 			}
 		}
-		Contato contato = contatos[contatoPosicao];
-		favoritos[posicaoFavorito] =  formataFavorito("❤", contato.getNome(), contato.getSobrenome(), contato.getNumero());
+		return favoritosExistentes;
 	}
 
-
-	public String[] listaFavoritos(){
-		return favoritos;
+	public boolean favoritado(int posicao){
+		for(int i=0; i < favoritos.length; i++){
+			if( (favoritos[i].getNome()).equals(contatos[posicao].getNome()) ){
+				return true;
+			}
+		}
+		return false;
 	}
 
-	public void exibeContato(Contato contato) throws IllegalArgumentException{
+	public String exibeContato(Contato contato, int posicao) throws IllegalArgumentException{
+
+		if( favoritado(posicao) ){
+			return formataFavorito("❤", contato.getNome(), contato.getSobrenome(), contato.getNumero());
+		}
 
 		if(contato.getNome().isBlank()){
 			throw new IllegalArgumentException("POSIÇÃO INVÁLIDA");
 		}
+		return formataContato(posicao, contato.getNome(), contato.getSobrenome(), contato.getNumero());
 	}
 
 	public ArrayList<String> listaContatos(){
@@ -103,7 +142,7 @@ public class Agenda {
 
 		for(int i = 0; i < contatos.length; i++) {
 			if (!contatos[i].getNome().isBlank()) {
-				contatosExistentes.add(formataContato(i, contatos[i].getNome()));
+				contatosExistentes.add(formataContato(i, contatos[i].getNome(), contatos[i].getSobrenome(), contatos[i].getNumero()));
 			}
 		}
 		return contatosExistentes;
@@ -113,19 +152,20 @@ public class Agenda {
 		return numContatos;
 	}
 
-
 	/**
 	 * Formata um contato para impressão na interface.
 	 *
 	 * @param posicao A posição do contato (que é exibida)/
-	 * @param contato O contato a ser impresso.
+	 * @param
 	 * @return A String formatada.
 	 */
-	private static String formataContato(int posicao, String contato) {
-		return posicao + " - " + contato;
+	private static String formataContato(int posicao, String nome, String sobrenome, String numero) {
+		return posicao + " - " + nome + " " + sobrenome + "\n" + numero;
 	}
 
 	private static String formataFavorito(String coracao, String nome, String sobrenome, String numero){
 		return coracao + " " + nome + " " + sobrenome + "\n" + numero;
 	}
+
+
 }
