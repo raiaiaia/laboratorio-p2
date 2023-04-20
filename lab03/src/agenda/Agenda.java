@@ -78,7 +78,7 @@ public class Agenda {
 			throw new IllegalArgumentException("CONTATO INVÁLIDO");
 		}
 		for(Contato c: getContatos()){
-			if(c.getNome().toLowerCase().equals(nome) && c.getSobrenome().toLowerCase().equals(sobrenome)){
+			if(c.equals(nome, sobrenome)){
 				throw new IllegalArgumentException("CONTATO JÁ CADASTRADO");
 			}
 		}
@@ -90,50 +90,61 @@ public class Agenda {
 	}
 
 	public String adicionaFavorito(int contatoPosicao, int posicaoFavorito)throws IllegalArgumentException{
+		Contato contatoTeste = getContato(contatoPosicao);
 
 		if(posicaoFavorito < 1 || posicaoFavorito > 10){
 			throw new IllegalArgumentException("POSIÇÃO INVÁLIDA");
 		}
-		if(favoritado(contatoPosicao)){
+		if(favoritado(contatoTeste)){
 			throw new IllegalArgumentException("CONTATO JÁ É FAVORITO");
 		}
-		if( !(favoritado(contatoPosicao)) ){
+		if( !(favoritado(contatoTeste)) ){
 			favoritos[posicaoFavorito] = contatos[contatoPosicao];
 		}
-
 		return "CONTATO FAVORITADO NA POSIÇÃO " + posicaoFavorito;
+	}
+
+	public void removeFavorito(int posicaoFavorito){
+
+		if(posicaoFavorito < 1 || posicaoFavorito > 10){
+			throw new IllegalArgumentException("POSIÇÃO INVÁLIDA");
+		}
+
+		favoritos[posicaoFavorito] = null;
+
 	}
 
 	public ArrayList<String> listaFavoritos(){
 		Contato[] favoritos = getFavoritos();
 		ArrayList<String> favoritosExistentes = new ArrayList<>();
 		for(int i=0; i < favoritos.length; i++){
-			if( !(favoritos[i].getNome().isBlank()) ){
+			if( favoritos[i] != null && !(favoritos[i].getNome().isBlank()) ){
 				favoritosExistentes.add(formataFavorito("❤", favoritos[i].getNome(), favoritos[i].getSobrenome(), favoritos[i].getNumero()));
 			}
 		}
 		return favoritosExistentes;
 	}
 
-	public boolean favoritado(int posicao){
-		for(int i=0; i < favoritos.length; i++){
-			if( (favoritos[i].getNome()).equals(contatos[posicao].getNome()) ){
+	public boolean favoritado(Contato contatoTeste){
+		Contato[] favoritos = getFavoritos();
+		for(Contato f: favoritos){
+			if(f != null && f.equals(contatoTeste.getNome(), contatoTeste.getSobrenome())) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	public String exibeContato(Contato contato, int posicao) throws IllegalArgumentException{
+	public String exibeContato(int posicao) throws IllegalArgumentException{
+		Contato contatoTeste = getContato(posicao);
 
-		if( favoritado(posicao) ){
-			return formataFavorito("❤", contato.getNome(), contato.getSobrenome(), contato.getNumero());
+		if(favoritado(contatoTeste)){
+			return formataFavorito("❤", contatoTeste.getNome(), contatoTeste.getSobrenome(), contatoTeste.getNumero());
 		}
-
-		if(contato.getNome().isBlank()){
+		if(contatoTeste.getNome().isBlank()){
 			throw new IllegalArgumentException("POSIÇÃO INVÁLIDA");
 		}
-		return formataContato(posicao, contato.getNome(), contato.getSobrenome(), contato.getNumero());
+		return formataContato(posicao, contatoTeste.getNome(), contatoTeste.getSobrenome(), contatoTeste.getNumero());
 	}
 
 	public ArrayList<String> listaContatos(){

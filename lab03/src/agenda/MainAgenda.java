@@ -125,10 +125,9 @@ public class MainAgenda {
 		Contato contato = agenda.getContato(posicao);
 
 		System.out.println("Dados do contato:\n");
-		System.out.println(agenda.exibeContato(contato, posicao));
 
 		try {
-			agenda.exibeContato(contato, posicao);
+			System.out.println(agenda.exibeContato(posicao));
 		}catch (IllegalArgumentException e){
 			System.out.println(e.getMessage());
 		}
@@ -166,16 +165,22 @@ public class MainAgenda {
 		System.out.println("\nPosição> ");
 		int posicaoFavorito = scanner.nextInt();
 
-		System.out.println(agenda.adicionaFavorito(contatoPosicao, posicaoFavorito));
 		try {
-			agenda.adicionaFavorito(contatoPosicao, posicaoFavorito);
+			System.out.println(agenda.adicionaFavorito(contatoPosicao, posicaoFavorito));
 		}catch (IllegalArgumentException e){
 			System.out.println(e.getMessage());
 		}
 	}
 
 	public static void removeFavorito(Agenda agenda, Scanner scanner){
+		System.out.println("\nPosição> ");
+		int posicaoFavorito = scanner.nextInt();
 
+		try {
+			agenda.removeFavorito(posicaoFavorito);
+		}catch (IllegalArgumentException e){
+			System.out.println(e.getMessage());
+		}
 	}
 
 	/**
