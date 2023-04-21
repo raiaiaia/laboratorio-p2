@@ -1,7 +1,11 @@
 package agenda;
 
-import java.util.Locale;
 import java.util.Objects;
+
+/**
+ *  Contato de uma agenda.
+ * @author Danielly Rayanne Macedo Lima.
+ */
 
 public class Contato {
     private String nome;
@@ -9,52 +13,40 @@ public class Contato {
     private String numero;
     private int posicao;
 
-
-    public Contato() {
-        posicao = 0;
-        nome = "";
-        sobrenome = "";
-        numero = "";
-    }
-
-    public void setNome(String nome) {
+    /**
+     * Cria um contato.
+     */
+    public Contato(int posicao, String nome, String sobrenome, String numero) {
+        this.posicao = posicao;
         this.nome = nome;
-    }
-
-    public void setSobrenome(String sobrenome) {
         this.sobrenome = sobrenome;
-    }
-
-    public void setNumero(String numero) {
         this.numero = numero;
-    }
-
-    public int getPosicao() {
-        return posicao + 1;
     }
 
     public String getNome() {
         return nome;
     }
-
     public String getSobrenome(){
         return sobrenome;
     }
     public String getNumero(){ return numero; }
 
+    /**
+     * Método equals que evita um contato ser cadastrado ou adicionado aos favoritos mais de uma vez.
+     * @param nome Nome do contato.
+     * @param sobrenome Sobrenome do contato
+     * @return verdadeiro ou falso.
+     */
     public boolean equals(String nome, String sobrenome) {
-        return getNome().equals(nome.toLowerCase()) && getSobrenome().equals(sobrenome.toLowerCase());
+        return getNome().toLowerCase().equals(nome.toLowerCase()) && getSobrenome().toLowerCase().equals(sobrenome.toLowerCase());
     }
-
     @Override
     public int hashCode() {
         return Objects.hash(getNome(), sobrenome);
     }
-
     @Override
     public String toString(){
         return nome + " " + sobrenome + "\n" + numero;
     }
-
 
 }

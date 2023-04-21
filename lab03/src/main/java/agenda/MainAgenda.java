@@ -8,7 +8,8 @@ import java.util.Scanner;
 /**
  * Interface com menus texto para manipular uma agenda de contatos.
  * 
- * @author nazarenoandrade
+ * @author Nazareno Andrade
+ * @author Danielly Rayanne Macedo Lima.
  *
  */
 public class MainAgenda {
@@ -107,6 +108,9 @@ public class MainAgenda {
 
 	}
 
+	/**
+	 * Imprime a lista de favoritos da agenda.
+	 */
 	private static void listaFavoritos(ArrayList<String> favoritos){
 		for(String s: favoritos){
 			System.out.println(s);
@@ -122,19 +126,15 @@ public class MainAgenda {
 	private static void exibeContato(Agenda agenda, Scanner scanner) {
 		System.out.print("\nQual contato> ");
 		int posicao = scanner.nextInt();
-		Contato contato = agenda.getContato(posicao);
-
-		System.out.println("Dados do contato:\n");
 
 		try {
+			System.out.println("Dados do contato:\n");
 			System.out.println(agenda.exibeContato(posicao));
 		}catch (IllegalArgumentException e){
 			System.out.println(e.getMessage());
 		}
 
 	}
-
-
 	/**
 	 * Cadastra um contato na agenda.
 	 *
@@ -158,7 +158,12 @@ public class MainAgenda {
 		}
 
 	}
-
+	/**
+	 * Cadastra um contato na lista de favoritos de uma agenda.
+	 *
+	 * @param agenda A agenda.
+	 * @param scanner Scanner para pedir informações do contato.
+	 */
 	private static void adicionaFavorito(Agenda agenda, Scanner scanner){
 		System.out.println("\nContato> ");
 		int contatoPosicao = scanner.nextInt();
@@ -171,6 +176,12 @@ public class MainAgenda {
 			System.out.println(e.getMessage());
 		}
 	}
+
+	/**
+	 * Remove um contato da lista de favoritos de uma agenda.
+	 * @param agenda A agenda.
+	 * @param scanner Scanner para pedir informações do contato.
+	 */
 
 	public static void removeFavorito(Agenda agenda, Scanner scanner){
 		System.out.println("\nPosição> ");
