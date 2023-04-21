@@ -1,24 +1,97 @@
-//package agenda;
 package testes;
 import agenda.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
 class ContatoTest {
+    private Contato contatoTeste;
 
-    @org.junit.jupiter.api.Test
-    void getNome() {
+    @BeforeEach
+    void setUp() {
+        this.contatoTeste = new Contato(1,"Matheus", "Gaudencio", "(83) 99999-0000");
+
     }
 
-    @org.junit.jupiter.api.Test
-    void getSobrenome() {
+    @Test
+    void testeNomeCompleto(){
+        assertEquals("Matheus Gaudencio", this.contatoTeste.nomeCompleto());
     }
 
-    @org.junit.jupiter.api.Test
-    void getNumero() {
+    @Test
+    void toStringClasse(){
+        assertEquals("Matheus Gaudencio\n(83) 99999-0000", contatoTeste.toString());
+    }
+    @Test
+    void telefoneVazio(){
+
+        try{
+            Contato contatoMatheus = new Contato(1, "Matheus", "Gaudencio", "");
+            fail("A agenda não deve ter contato cadastrado com sucesso");
+        } catch (IllegalArgumentException e){
+            assertEquals("CONTATO INVÁLIDO - CAMPO TELEFONE VAZIO", e.getMessage());
+        }
+    }
+    @Test
+    void nomeVazio(){
+
+        try{
+            Contato contatoMatheus = new Contato(1, "", "Gaudencio", "(83) 99999-0000");
+            fail("A agenda não deve ter contato cadastrado com sucesso");
+        } catch (IllegalArgumentException e){
+            assertEquals("CONTATO INVÁLIDO - CAMPO NOME VAZIO", e.getMessage());
+        }
+    }
+    @Test
+    void nomeEspaços(){
+
+        try{
+            Contato contatoMatheus = new Contato(1, "  ", "Gaudencio", "(83) 99999-0000");
+            fail("A agenda não deve ter contato cadastrado com sucesso");
+        } catch (IllegalArgumentException e){
+            assertEquals("CONTATO INVÁLIDO - CAMPO NOME VAZIO", e.getMessage());
+        }
     }
 
-    @org.junit.jupiter.api.Test
-    void testEquals() {
+    @Test
+    void nomeNulo(){
+        try{
+            Contato contatoMatheus = new Contato(1, null, "Gaudencio", "(83) 99999-0000");
+            fail("A agenda não deve ter contato cadastrado com sucesso");
+        } catch (NullPointerException e){
+            assertEquals("CONTATO INVÁLIDO - NOME NULO", e.getMessage());
+        }
     }
+    @Test
+    void telefoneNulo(){
+        try{
+            Contato contatoMatheus = new Contato(1, "Matheus", "Gaudencio", null);
+            fail("A agenda não deve ter contato cadastrado com sucesso");
+        } catch (NullPointerException e){
+            assertEquals("CONTATO INVÁLIDO - TELEFONE NULO", e.getMessage());
+        }
+    }
+
+    @Test
+    void testaEquals() {
+        assert contatoTeste.equals(contatoTeste.getNome(), contatoTeste.getSobrenome());
+    }
+
+    @Test
+    void testaEqualsDiferentes(){
+        Contato contatoDiferente = new Contato(2, "Rayanne", "Macedo", "(83) 98877-1234");
+        assert !(contatoTeste.equals(contatoDiferente.getNome(), contatoDiferente.getSobrenome()));
+    }
+    @Test
+    void testaEqualsNulo(){
+        try {
+            assert contatoTeste.equals(null, null);
+        } catch (NullPointerException e){
+            assertEquals("CAMPOS NOME OU SOBRENOME == NULL", e.getMessage());
+        }
+    }
+
+
 }

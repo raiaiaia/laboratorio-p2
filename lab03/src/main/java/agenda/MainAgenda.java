@@ -86,6 +86,9 @@ public class MainAgenda {
 			case "R":
 				removeFavorito(agenda, scanner);
 				break;
+			case "M":
+				alteraTelefone(agenda, scanner);
+				break;
 			case "S":
 				sai();
 				break;
@@ -135,6 +138,7 @@ public class MainAgenda {
 		}
 
 	}
+
 	/**
 	 * Cadastra um contato na agenda.
 	 *
@@ -151,13 +155,15 @@ public class MainAgenda {
 		System.out.print("\nTelefone> ");
 		String telefone = scanner.next();
 
+
 		try {
 			agenda.cadastraContato(posicao, nome, sobrenome, telefone);
-		}catch (IllegalArgumentException e){
+		}catch (IllegalArgumentException | IndexOutOfBoundsException e){
 			System.out.println(e.getMessage());
 		}
 
 	}
+
 	/**
 	 * Cadastra um contato na lista de favoritos de uma agenda.
 	 *
@@ -172,7 +178,7 @@ public class MainAgenda {
 
 		try {
 			System.out.println(agenda.adicionaFavorito(contatoPosicao, posicaoFavorito));
-		}catch (IllegalArgumentException e){
+		}catch (ArrayIndexOutOfBoundsException | NullPointerException | IllegalArgumentException e){
 			System.out.println(e.getMessage());
 		}
 	}
@@ -189,7 +195,20 @@ public class MainAgenda {
 
 		try {
 			agenda.removeFavorito(posicaoFavorito);
-		}catch (IllegalArgumentException e){
+		}catch (ArrayIndexOutOfBoundsException | NullPointerException e){
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public static void alteraTelefone(Agenda agenda, Scanner scanner){
+		System.out.println("\nPosição> ");
+		int posicaoContato = scanner.nextInt();
+		System.out.println("\nNovo telefone> ");
+		String novoNumero = scanner.next();
+
+		try{
+			agenda.alteraTelefone(posicaoContato, novoNumero);
+		} catch (ArrayIndexOutOfBoundsException | NullPointerException | IllegalArgumentException e){
 			System.out.println(e.getMessage());
 		}
 	}

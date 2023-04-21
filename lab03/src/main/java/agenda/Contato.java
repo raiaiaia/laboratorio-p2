@@ -16,7 +16,19 @@ public class Contato {
     /**
      * Cria um contato.
      */
-    public Contato(int posicao, String nome, String sobrenome, String numero) {
+    public Contato(int posicao, String nome, String sobrenome, String numero) throws NullPointerException, IllegalArgumentException {
+        if(nome == null){
+            throw new NullPointerException("CONTATO INVÁLIDO - NOME NULO");
+        }
+        if(numero == null){
+            throw new NullPointerException("CONTATO INVÁLIDO - TELEFONE NULO");
+        }
+        if(numero.isBlank()){
+            throw new IllegalArgumentException("CONTATO INVÁLIDO - CAMPO TELEFONE VAZIO");
+        }
+        if(nome.isBlank()){
+            throw new IllegalArgumentException("CONTATO INVÁLIDO - CAMPO NOME VAZIO");
+        }
         this.posicao = posicao;
         this.nome = nome;
         this.sobrenome = sobrenome;
@@ -24,12 +36,17 @@ public class Contato {
     }
 
     public String getNome() {
-        return nome;
+        return this.nome;
     }
     public String getSobrenome(){
-        return sobrenome;
+        return this.sobrenome;
     }
-    public String getNumero(){ return numero; }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getNumero(){ return this.numero; }
 
     /**
      * Método equals que evita um contato ser cadastrado ou adicionado aos favoritos mais de uma vez.
@@ -37,16 +54,20 @@ public class Contato {
      * @param sobrenome Sobrenome do contato
      * @return verdadeiro ou falso.
      */
-    public boolean equals(String nome, String sobrenome) {
+    public boolean equals(String nome, String sobrenome){
+        if(nome == null || sobrenome == null){
+            throw new NullPointerException("CAMPOS NOME OU SOBRENOME == NULL");
+        }
         return getNome().toLowerCase().equals(nome.toLowerCase()) && getSobrenome().toLowerCase().equals(sobrenome.toLowerCase());
     }
     @Override
     public int hashCode() {
         return Objects.hash(getNome(), sobrenome);
     }
+    public String nomeCompleto() { return this.nome + " " + this.sobrenome;}
     @Override
     public String toString(){
-        return nome + " " + sobrenome + "\n" + numero;
+        return this.nome + " " + this.sobrenome + "\n" + this.numero;
     }
 
 }

@@ -46,7 +46,12 @@ public class Agenda {
 		for(int i=0; i < saida.length; i++){
 			saida[i] = favoritos[i];
 		}
-			return saida;}
+			return saida;
+	}
+
+	public Contato getFavorito(int posicao){
+		return favoritos[posicao-1];
+	}
 
 	/**
 	 * Acessa os dados de um contato específico.
@@ -69,15 +74,19 @@ public class Agenda {
 		if(posicao < 1 || posicao > 100){
 			throw new ArrayIndexOutOfBoundsException("POSIÇÃO INVÁLIDA");
 		}
-		if(nome == null  || telefone == null) {
-			throw new NullPointerException("CONTATO INVÁLIDO");
-		}
+
 		for(Contato c: getContatos()){
 			if(c != null && c.equals(nome, sobrenome)){
 				throw new IllegalCallerException("CONTATO JÁ CADASTRADO");
 			}
 		}
+
 		Contato novoContato = new Contato(posicao, nome, sobrenome, telefone);
+
+		if(nome.isBlank() || telefone.isBlank()){
+			throw new IllegalArgumentException("CONTATO INVÁLIDO - CAMPO TELEFONE VAZIO");
+		}
+
 		int corrigePosicao = posicao -1;
 		this.contatos[corrigePosicao] = novoContato;
 	}
@@ -100,8 +109,12 @@ public class Agenda {
 		if(favoritado(contatoPosicao)){
 			throw new IllegalCallerException("\nCONTATO JÁ É FAVORITO");
 		}
-		if( !(favoritado(contatoPosicao)) ){
-			favoritos[posicaoFavorito] = contatos[corrigePosicao];
+		if(favoritos[posicaoFavorito-1] == null && !(favoritado(contatoPosicao)) ){
+			favoritos[posicaoFavorito - 1] = contatos[corrigePosicao];
+		}
+		if(favoritos[posicaoFavorito - 1] != null && !(favoritado(contatoPosicao)) ){
+			removeFavorito(posicaoFavorito);
+			favoritos[posicaoFavorito - 1] = contatos[corrigePosicao];
 		}
 		return "CONTATO FAVORITADO NA POSIÇÃO " + posicaoFavorito;
 	}
@@ -115,10 +128,27 @@ public class Agenda {
 		if(posicaoFavorito < 1 || posicaoFavorito > 10){
 			throw new ArrayIndexOutOfBoundsException("POSIÇÃO INVÁLIDA");
 		}
-		if(favoritos[posicaoFavorito] == null){
+		if(favoritos[posicaoFavorito - 1] == null){
 			throw new NullPointerException("POSIÇÃO INVALIDA");
 		}
-		favoritos[posicaoFavorito] = null;
+		favoritos[posicaoFavorito - 1] = null;
+	}
+
+	public void alteraTelefone(int posicaoContato, String novoNumero){
+		int posicaoCorrigida = posicaoContato - 1;
+
+		if(posicaoContato < 1 || posicaoContato > 100){
+			throw new ArrayIndexOutOfBoundsException("POSIÇÃO INVÁLIDA");
+		}
+		if(novoNumero == null){
+			throw new NullPointerException("NÚMERO INVÁLIDO - CAMPO TELEFONE NULO");
+		}
+		if(novoNumero.isBlank()){
+			throw new IllegalArgumentException("NÚMERO INVÁLIDO - CAMPO TELEFONE VAZIO");
+		}
+
+		contatos[posicaoCorrigida].setNumero(novoNumero);
+
 	}
 
 	/**
@@ -128,9 +158,9 @@ public class Agenda {
 	public ArrayList<String> listaFavoritos(){
 		Contato[] favoritos = getFavoritos();
 		ArrayList<String> favoritosExistentes = new ArrayList<>();
-		for(int i=0; i < favoritos.length; i++){
-			if(favoritos[i] != null){
-				favoritosExistentes.add(formataFavorito("❤", favoritos[i].getNome(), favoritos[i].getSobrenome(), favoritos[i].getNumero()));
+		for(Contato f: favoritos){
+			if(f!= null){
+				favoritosExistentes.add("❤" + " " + f.toString());
 			}
 		}
 		return favoritosExistentes;
@@ -158,20 +188,21 @@ public class Agenda {
 	 * @return uma String com nome, sobrenome e telefone. Além de se esse contato é favorito ou não.
 	 */
 	public String exibeContato(int posicao){
-		Contato contato = getContato(posicao -1);
+		int corrigePosicao = posicao - 1;
 
-		if(contato == null){
-			throw new NullPointerException("POSIÇÃO INVÁLIDA");
-		}
 		if(posicao < 1 || posicao > 100){
 			throw new ArrayIndexOutOfBoundsException("POSIÇÃO INVÁLIDA");
 		}
 
+		Contato contato = getContato(corrigePosicao);
+		if(contato == null){
+			throw new NullPointerException("POSIÇÃO INVÁLIDA");
+		}
 		if(contato != null && (favoritado(posicao))) {
-			return formataFavorito("❤", contato.getNome(), contato.getSobrenome(), contato.getNumero());
+			return "❤" + " " + contato;
 		}
 
-		return formataContato(posicao, contato.getNome(), contato.getSobrenome(), contato.getNumero());
+		return posicao + "-" + contato;
 	}
 
 	/**
@@ -184,7 +215,7 @@ public class Agenda {
 
 		for(int i = 0; i < contatos.length; i++) {
 			if (contatos[i] != null) {
-				contatosExistentes.add(formataContato(i + 1, contatos[i].getNome(), contatos[i].getSobrenome(), contatos[i].getNumero()));
+				contatosExistentes.add(formataContato(i + 1, contatos[i]));
 			}
 		}
 		return contatosExistentes;
@@ -194,26 +225,10 @@ public class Agenda {
 	 * Formata um contato para impressão na interface.
 	 *
 	 * @param posicao A posição do contato (que é exibida).
-	 * @param nome O nome do contato a ser exibido.
-	 * @param sobrenome O sobrenome do contato a ser exibido.
-	 * @param numero O telefone do contato a ser exibido.
+	 * @param contato O contato que será exibido.
 	 * @return A String formatada.
 	 */
-	private static String formataContato(int posicao, String nome, String sobrenome, String numero) {
-		return posicao + " - " + nome + " " + sobrenome + "\n" + numero;
+	private static String formataContato(int posicao, Contato contato) {
+		return posicao + " - " + contato.toString();
 	}
-	/**
-	 * Formata um contato favoritado para impressão na interface.
-	 *
-	 * @param coracao O emoji de um coração, que indica que este contato é favoritado.
-	 * @param nome O nome do contato a ser exibido.
-	 * @param sobrenome O sobrenome do contato a ser exibido.
-	 * @param numero O telefone do contato a ser exibido.
-	 * @return A String formatada.
-	 */
-	private static String formataFavorito(String coracao, String nome, String sobrenome, String numero){
-		return coracao + " " + nome + " " + sobrenome + "\n" + numero;
-	}
-
-
 }

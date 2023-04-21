@@ -1,0 +1,8 @@
+out/
+.idea
+lib
+!**/src/main/**/out/
+!**/src/test/**/out/
+target
+agenda_inicial.csv
+lab03.iml
