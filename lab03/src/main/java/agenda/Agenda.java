@@ -134,6 +134,11 @@ public class Agenda {
 		favoritos[posicaoFavorito - 1] = null;
 	}
 
+	/**
+	 * Modifica o número de um contato previamente cadastrado na agenda.
+	 * @param posicaoContato Posição do contato a ser modificado.
+	 * @param novoNumero Novo número do contato.
+	 */
 	public void alteraTelefone(int posicaoContato, String novoNumero){
 		int posicaoCorrigida = posicaoContato - 1;
 
@@ -205,6 +210,11 @@ public class Agenda {
 		return posicao + "-" + contato;
 	}
 
+	/**
+	 * Exibe contatos por meio do nome.
+	 * @param nome
+	 * @return todos os contatos que possuam o mesmo nome
+	 */
 	public ArrayList<String> exibeContatoNome(String nome){
 		Contato[] contatos = getContatos();
 		ArrayList<String> nomesIguais = new ArrayList<>();

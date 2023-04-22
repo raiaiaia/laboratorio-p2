@@ -46,12 +46,10 @@ public class Contato {
         this.numero = numero;
     }
 
-    public String getNumero(){ return this.numero; }
-
     /**
-     * Método equals que evita um contato ser cadastrado ou adicionado aos favoritos mais de uma vez.
+     * Método equals que compara duas Strings.
      * @param nome Nome do contato.
-     * @param sobrenome Sobrenome do contato
+     * @param sobrenome Sobrenome do contato.
      * @return verdadeiro ou falso.
      */
     public boolean equals(String nome, String sobrenome){
@@ -60,6 +58,11 @@ public class Contato {
         }
         return getNome().toLowerCase().equals(nome.toLowerCase()) && getSobrenome().toLowerCase().equals(sobrenome.toLowerCase());
     }
+    /**
+     * Método equals que compara duas Strings.
+     * @param nome Nome do contato.
+     * @return verdadeiro ou falso.
+     */
     public boolean equalsNome(String nome){
         if(nome == null){
             throw new NullPointerException("NOME INVÁLIDO - CAMPO NOME NULO");
@@ -73,7 +76,17 @@ public class Contato {
     public int hashCode() {
         return Objects.hash(getNome(), sobrenome);
     }
+
+    /**
+     * Representação em String de um contato.
+     * @return nome e sobrenome de um contato.
+     */
     public String nomeCompleto() { return this.nome + " " + this.sobrenome;}
+
+    /**
+     * Representação em String de um contato.
+     * @return nome, sobrenome e telefone de um contato.
+     */
     @Override
     public String toString(){
         return this.nome + " " + this.sobrenome + "\n" + this.numero;
