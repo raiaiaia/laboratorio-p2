@@ -1,4 +1,3 @@
-package testes;
 import agenda.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -127,7 +126,7 @@ class AgendaTest {
         int posicaoTeste = 20;  //não existe contato cadastrado nessa posicao
 
         try{
-            agendaTeste.exibeContato(posicaoTeste);
+            agendaTeste.exibeContatoPosicao(posicaoTeste);
             fail("A agenda não tem contato cadastrado");
         }catch (NullPointerException e){
             assertEquals("POSIÇÃO INVÁLIDA", e.getMessage());
@@ -138,7 +137,7 @@ class AgendaTest {
         int posicaoTeste = 0;
 
         try{
-            agendaTeste.exibeContato(posicaoTeste);
+            agendaTeste.exibeContatoPosicao(posicaoTeste);
             fail("Ao pegar a representação da agenda na posição 0, o sistema deve dar um erro (ou retornar nada)");
         } catch (ArrayIndexOutOfBoundsException e){
             assertEquals("POSIÇÃO INVÁLIDA", e.getMessage());
@@ -150,10 +149,20 @@ class AgendaTest {
         int posicaoTeste = 101;
 
         try{
-            agendaTeste.exibeContato(posicaoTeste);
+            agendaTeste.exibeContatoPosicao(posicaoTeste);
             fail("Ao pegar a representação da agenda na posição 101, o sistema deve dar um erro (ou retornar nada)");
         } catch (ArrayIndexOutOfBoundsException e){
             assertEquals("POSIÇÃO INVÁLIDA", e.getMessage());
+        }
+    }
+    @Test
+    void exibeContatoNomeNaoExistente(){
+        String nome = "rayanne";
+        try{
+            agendaTeste.exibeContatoNome(nome);
+            fail("Deve lançar erro de não existir contatos com esse nome");
+        }catch (NullPointerException e){
+            assertEquals("NÃO EXISTEM CONTATOS COM ESSE NOME", e.getMessage());
         }
     }
 
@@ -161,7 +170,7 @@ class AgendaTest {
     void exibeContatoFavoritado(){
         //adiciona Matheus Gaudencio na lista de favoritos, posicao 1
         agendaTeste.adicionaFavorito(1, 1);
-        assertEquals("❤ Matheus Gaudencio\n" + "(83) 99999-0000", agendaTeste.exibeContato(1));
+        assertEquals("❤ Matheus Gaudencio\n" + "(83) 99999-0000", agendaTeste.exibeContatoPosicao(1));
 
     }
 
@@ -192,14 +201,14 @@ class AgendaTest {
         agendaTeste.adicionaFavorito(1,1);
         agendaTeste.adicionaFavorito(2,1);
         assertEquals("Livia Sampaio\n" + "(83) 99873-7383", agendaTeste.getFavorito(1).toString());
-        assertEquals("1" + "-" + "Matheus Gaudencio\n" + "(83) 99999-0000", agendaTeste.exibeContato(1).toString(), "O contato antigo deve deixar de ser favorito");
+        assertEquals("1" + "-" + "Matheus Gaudencio\n" + "(83) 99999-0000", agendaTeste.exibeContatoPosicao(1).toString(), "O contato antigo deve deixar de ser favorito");
 
     }
     @Test
     void removeFavorito() {
         agendaTeste.adicionaFavorito(1,1);
         agendaTeste.removeFavorito(1);
-        assertEquals("1" + "-" + "Matheus Gaudencio\n" + "(83) 99999-0000", agendaTeste.exibeContato(1).toString(), "O contato deve deixar de ser favorito");
+        assertEquals("1" + "-" + "Matheus Gaudencio\n" + "(83) 99999-0000", agendaTeste.exibeContatoPosicao(1).toString(), "O contato deve deixar de ser favorito");
     }
 
     @Test

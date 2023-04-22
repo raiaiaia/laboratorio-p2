@@ -53,6 +53,7 @@ public class MainAgenda {
 						"(F)avoritos\n"+
 						"(A)dicionar Favorito\n"+
 						"(R)emover Favorito\n"+
+						"(M)uda telefone\n"+
 						"(S)air\n" +
 						"\n" +
 						"Opção> ");
@@ -120,6 +121,12 @@ public class MainAgenda {
 		}
 	}
 
+	private static void listaContatosIguaisNome(ArrayList<String> nomesIguais){
+		for(String s: nomesIguais){
+			System.out.println(s);
+		}
+	}
+
 	/**
 	 * Imprime os detalhes de um dos contatos da agenda.
 	 *
@@ -127,15 +134,42 @@ public class MainAgenda {
 	 * @param scanner Scanner para capturar qual contato.
 	 */
 	private static void exibeContato(Agenda agenda, Scanner scanner) {
-		System.out.print("\nQual contato> ");
-		int posicao = scanner.nextInt();
+		System.out.println("Exibir contato por:\n" +
+				"(P)osição\n" +
+				"(N)ome\n" +
+				"\n" +
+				"Opção> ");
 
-		try {
-			System.out.println("Dados do contato:\n");
-			System.out.println(agenda.exibeContato(posicao));
-		}catch (IllegalArgumentException e){
-			System.out.println(e.getMessage());
+		String opcao = scanner.next().toUpperCase();
+
+		switch (opcao){
+			case "P":
+				System.out.print("\nQual contato> ");
+				int posicao = scanner.nextInt();
+
+				try {
+					System.out.println("Dados do contato:\n");
+					System.out.println(agenda.exibeContatoPosicao(posicao));
+				}catch (ArrayIndexOutOfBoundsException | NullPointerException e){
+					System.out.println(e.getMessage());
+				}
+				break;
+			case "N":
+
+				System.out.print("\nQual contato> ");
+				String nome = scanner.next();
+
+				System.out.println("\nDados de contatos com esse nome:\n");
+				try {
+					listaContatosIguaisNome(agenda.exibeContatoNome(nome));
+				}catch (NullPointerException e){
+					System.out.println(e.getMessage());
+				}
+				break;
+			default:
+				System.out.println("Opção inválida!");
 		}
+
 
 	}
 

@@ -187,7 +187,7 @@ public class Agenda {
 	 * @param posicao Posição do contato a ser exibido.
 	 * @return uma String com nome, sobrenome e telefone. Além de se esse contato é favorito ou não.
 	 */
-	public String exibeContato(int posicao){
+	public String exibeContatoPosicao(int posicao){
 		int corrigePosicao = posicao - 1;
 
 		if(posicao < 1 || posicao > 100){
@@ -203,6 +203,23 @@ public class Agenda {
 		}
 
 		return posicao + "-" + contato;
+	}
+
+	public ArrayList<String> exibeContatoNome(String nome){
+		Contato[] contatos = getContatos();
+		ArrayList<String> nomesIguais = new ArrayList<>();
+
+		for(Contato c: contatos){
+			if(c != null && c.equalsNome(nome)){
+				nomesIguais.add(c.toString());
+			}
+		}
+
+		if(nomesIguais.size() == 0){
+			throw new NullPointerException("NÃO EXISTEM CONTATOS COM ESSE NOME");
+		}
+
+		return nomesIguais;
 	}
 
 	/**

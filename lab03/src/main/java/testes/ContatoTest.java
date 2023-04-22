@@ -1,4 +1,3 @@
-package testes;
 import agenda.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -76,7 +75,9 @@ class ContatoTest {
 
     @Test
     void testaEquals() {
-        assert contatoTeste.equals(contatoTeste.getNome(), contatoTeste.getSobrenome());
+        String nome = "matheus";
+        String sobrenome = "gaudencio";
+        assert contatoTeste.equals(nome, sobrenome);
     }
 
     @Test
@@ -84,6 +85,7 @@ class ContatoTest {
         Contato contatoDiferente = new Contato(2, "Rayanne", "Macedo", "(83) 98877-1234");
         assert !(contatoTeste.equals(contatoDiferente.getNome(), contatoDiferente.getSobrenome()));
     }
+
     @Test
     void testaEqualsNulo(){
         try {
@@ -93,5 +95,42 @@ class ContatoTest {
         }
     }
 
+    @Test
+    void testaEqualsNome(){
+        String nome = "matheus";
+        assert contatoTeste.equalsNome(nome);
+    }
+
+    @Test
+    void testaEqualsNomeDiferente(){
+        String nome = "rayanne";
+        assert !(contatoTeste.equalsNome(nome));
+    }
+    @Test
+    void testaEqualsNomeNulo() {
+        try {
+            assert contatoTeste.equalsNome(null);
+        } catch (NullPointerException e) {
+            assertEquals("NOME INVÁLIDO - CAMPO NOME NULO", e.getMessage());
+        }
+    }
+
+    @Test
+    void testaEqualsNomeVazio() {
+        try {
+            assert contatoTeste.equalsNome("");
+        } catch (IllegalArgumentException e) {
+            assertEquals("NOME INVÁLIDO - CAMPO NOME VAZIO", e.getMessage());
+        }
+    }
+
+    @Test
+    void testaEqualsNomeEspaco() {
+        try {
+            assert contatoTeste.equalsNome(" ");
+        } catch (IllegalArgumentException e) {
+            assertEquals("NOME INVÁLIDO - CAMPO NOME VAZIO", e.getMessage());
+        }
+    }
 
 }

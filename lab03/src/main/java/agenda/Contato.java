@@ -60,6 +60,15 @@ public class Contato {
         }
         return getNome().toLowerCase().equals(nome.toLowerCase()) && getSobrenome().toLowerCase().equals(sobrenome.toLowerCase());
     }
+    public boolean equalsNome(String nome){
+        if(nome == null){
+            throw new NullPointerException("NOME INVÁLIDO - CAMPO NOME NULO");
+        }
+        if(nome.isBlank()){
+            throw new IllegalArgumentException("NOME INVÁLIDO - CAMPO NOME VAZIO");
+        }
+        return getNome().toLowerCase().equals(nome.toLowerCase());
+    }
     @Override
     public int hashCode() {
         return Objects.hash(getNome(), sobrenome);
