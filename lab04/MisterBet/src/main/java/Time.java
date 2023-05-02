@@ -12,10 +12,7 @@ public class Time {
 
     @Override
     public String toString() {
-        return "Time{" +
-                "codigo='" + codigo + '\'' +
-                ", nome='" + nome + '\'' +
-                ", mascote='" + mascote + '\'' +
-                '}';
+        return  "[" + this.codigo + "] " + this.nome + " / " + this.mascote;
     }
+
 }
