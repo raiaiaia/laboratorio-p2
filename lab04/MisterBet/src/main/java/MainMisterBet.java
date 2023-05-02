@@ -7,11 +7,12 @@ import java.util.Scanner;
 public class MainMisterBet {
 
     public static void main(String[] args) {
+        MisterBetController mrBet = new MisterBetController();
         Scanner scanner = new Scanner(System.in);
         String opcao = "";
         while (true) {
             opcao = menu(scanner);
-            comando(opcao);
+            comando(opcao, mrBet, scanner);
         }
     }
     public static String menu(Scanner scanner){
@@ -29,16 +30,16 @@ public class MainMisterBet {
 
     }
 
-    public static void comando(String opcao){
+    public static void comando(String opcao, MisterBetController mrBet, Scanner scanner){
         switch (opcao){
             case "M":
-                //cadastraTime();
+                cadastraTime(mrBet, scanner);
                 break;
             case "R":
-                //recuperaTime();
+                recuperaTime(mrBet, scanner);
                 break;
             case ".":
-                //adicionaCampeonato();
+                adicionaCampeonato(mrBet, scanner);
                 break;
             case "B":
                 //incluiTime();
@@ -57,26 +58,44 @@ public class MainMisterBet {
         }
     }
 
-    public static void cadastraTime(Scanner scanner){
+    public static void cadastraTime(MisterBetController mrBet, Scanner scanner){
         System.out.println("\nCódigo: ");
-        String codigo = scanner.nextLine();
+        String codigo = scanner.next();
         System.out.println("\nNome: ");
-        String nome = scanner.nextLine();
+        String nome = scanner.next();
         System.out.println("\nMascote: ");
-        String mascote = scanner.nextLine();
+        String mascote = scanner.next();
 
-        //.cadastraTime(codigo, nome, mascote);
+        try{
+            System.out.println(mrBet.cadastraTime(codigo, nome, mascote));
+        }catch (IllegalArgumentException e ){
+            System.out.println(e.getMessage());
+        }
 
     }
-    public static void recuperaTime(Scanner scanner){
+    public static void recuperaTime(MisterBetController mrBet, Scanner scanner){
         System.out.println("\nCódigo: ");
-        String codigo = scanner.nextLine();
+        String codigo = scanner.next();
+
+        try{
+            System.out.println(mrBet.recuperaTime(codigo));
+        }catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
     }
-    public static void adicionaCampeonato(Scanner scanner){
+    public static void adicionaCampeonato(MisterBetController mrBet, Scanner scanner){
+        scanner = new Scanner(System.in);
         System.out.println("\nCampeonato: ");
         String campeonato = scanner.nextLine();
         System.out.println("\nParticipantes: ");
         int participantes = scanner.nextInt();
+
+        try{
+            System.out.println(mrBet.adicionaCampeonato(campeonato, participantes));
+        } catch (NullPointerException e){
+            System.out.println(e.getMessage());
+        }
+
     }
     public static void incluiTime(Scanner scanner){
         System.out.println("\n(I)ncluir time em campeonato ou (V)erificar se time está em campeonato? ");
@@ -106,7 +125,7 @@ public class MainMisterBet {
         if(opcao.equals("A")){
             System.out.println("\nCódigo do Time: ");
             String time = scanner.nextLine();
-            System.out.println('\nCampeonato: ');
+            System.out.println("\nCampeonato: ");
             String campeonato = scanner.nextLine();
             System.out.println("\nColocação: ");
             int colocacao = scanner.nextInt();

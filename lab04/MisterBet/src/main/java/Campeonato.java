@@ -13,8 +13,8 @@ public class Campeonato {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Campeonato that)) return false;
-        return Objects.equals(nome, that.nome);
+        if (!(o instanceof Campeonato campeonato)) return false;
+        return Objects.equals(nome, campeonato.nome);
     }
     @Override
     public int hashCode() {

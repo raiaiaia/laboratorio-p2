@@ -1,9 +1,44 @@
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 
 public class MisterBetController {
-    private HashSet<Campeonato> campeonatos = new HashSet<Campeonato>();
+    private HashSet<Campeonato> campeonatos;
+    private HashMap<String, Time> times;
+    public MisterBetController(){
+        this.campeonatos = new HashSet<>();
+        this.times = new HashMap<>();
+    }
+    public String cadastraTime(String codigo, String nome, String mascote){
+        String saida = "";
 
-    //public adicionaCampeonato(String nome, int participantes){
+        if(times.containsKey(codigo)){
+            return "TIME JÁ EXISTE!";
+        } else {
+            Time novoTime = new Time(codigo, nome, mascote);
+            times.put(codigo, novoTime);
+            saida = "INCLUSÃO REALIZADA!";
+        }
+        return saida;
+    }
 
-    //}
+    public String recuperaTime(String codigo){
+
+        if(times.get(codigo) == null) {
+            return "TIME NÃO EXISTE!";
+        }
+        return this.times.get(codigo).toString();
+    }
+
+    public String adicionaCampeonato(String campeonato, int participantes){
+        Campeonato novoCampeonato = new Campeonato(campeonato, participantes);
+
+        if(campeonatos.contains(novoCampeonato)){
+            return "CAMPEONATO JÁ EXISTE!";
+        }
+        campeonatos.add(novoCampeonato);
+        return "CAMPEONATO ADIICIONADO!";
+    }
+
+
 }
