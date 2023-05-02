@@ -12,11 +12,11 @@ public class MisterBetController {
     public String cadastraTime(String codigo, String nome, String mascote){
         String saida = "";
 
-        if(times.containsKey(codigo)){
+        if(times.containsKey(codigo.toUpperCase())){
             return "TIME JÁ EXISTE!";
         } else {
             Time novoTime = new Time(codigo, nome, mascote);
-            times.put(codigo, novoTime);
+            times.put(codigo.toUpperCase(), novoTime);
             saida = "INCLUSÃO REALIZADA!";
         }
         return saida;
@@ -31,7 +31,7 @@ public class MisterBetController {
     }
 
     public String adicionaCampeonato(String campeonato, int participantes){
-        Campeonato novoCampeonato = new Campeonato(campeonato, participantes);
+        Campeonato novoCampeonato = new Campeonato(campeonato.toUpperCase(), participantes);
 
         if(campeonatos.contains(novoCampeonato)){
             return "CAMPEONATO JÁ EXISTE!";

@@ -14,7 +14,7 @@ public class Time {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Time time)) return false;
-        return Objects.equals(codigo.toLowerCase(), time.codigo);
+        return Objects.equals(codigo, time.codigo);
     }
     @Override
     public int hashCode() {
