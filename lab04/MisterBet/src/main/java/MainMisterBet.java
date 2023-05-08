@@ -16,16 +16,19 @@ public class MainMisterBet {
         }
     }
     public static String menu(Scanner scanner){
-        System.out.println("\n---\nMENU\n" +
-                           "(M)inha inclusão de times\n" +
-                           "(R)ecuperar time\n" +
-                           "(.)Adicionar campeonato\n" +
-                           "(B)ora incluir time em campeonato e Verificar se time está em campeonato\n"+
-                           "(E)xibir campeonatos que o time participa\n"+
-                           "(T)entar a sorte e status\n"+
-                           "(!)Já pode fechar o programa!\n"+
-                           "\n" +
-                           "Opção> ");
+        System.out.println("""
+                         
+                ---------- MENU ----------
+                (M)inha inclusão de times
+                (R)ecuperar time
+                (.)Adicionar campeonato
+                (B)ora incluir time em campeonato e Verificar se time está em campeonato
+                (E)xibir campeonatos que o time participa
+                (T)entar a sorte e status
+                (!)Já pode fechar o programa!
+                (H) Histórico
+                  
+                Opção>""");
         return scanner.next().toUpperCase();
 
     }
@@ -42,29 +45,34 @@ public class MainMisterBet {
                 adicionaCampeonato(mrBet, scanner);
                 break;
             case "B":
-                //incluiTime();
+                subMenu1(mrBet, scanner);
                 break;
             case "E":
-                //exibeCampeonatosDoTime();
+                exibeCampeonatosDoTime(mrBet, scanner);
                 break;
             case "T":
-                //aposta();
+                subMenu2(mrBet, scanner);
+                break;
+            case "H":
+                historico(mrBet);
                 break;
             case "!":
                 sai();
                 break;
             default:
-                System.out.println("OPÇÃO INVÁLIDA");
+                System.err.println("OPÇÃO INVÁLIDA");
         }
     }
 
     public static void cadastraTime(MisterBetController mrBet, Scanner scanner){
         System.out.println("\nCódigo: ");
-        String codigo = scanner.next();
+        scanner = new Scanner(System.in);
+        String codigo = scanner.nextLine().toUpperCase();
         System.out.println("\nNome: ");
         String nome = scanner.next();
         System.out.println("\nMascote: ");
-        String mascote = scanner.next();
+        scanner = new Scanner(System.in);
+        String mascote = scanner.nextLine();
 
         try{
             System.out.println(mrBet.cadastraTime(codigo, nome, mascote));
@@ -73,9 +81,10 @@ public class MainMisterBet {
         }
 
     }
+
     public static void recuperaTime(MisterBetController mrBet, Scanner scanner){
         System.out.println("\nCódigo: ");
-        String codigo = scanner.next();
+        String codigo = scanner.next().toUpperCase();
 
         try{
             System.out.println(mrBet.recuperaTime(codigo));
@@ -83,10 +92,11 @@ public class MainMisterBet {
             System.out.println(e.getMessage());
         }
     }
+
     public static void adicionaCampeonato(MisterBetController mrBet, Scanner scanner){
         scanner = new Scanner(System.in);
         System.out.println("\nCampeonato: ");
-        String campeonato = scanner.nextLine();
+        String campeonato = scanner.nextLine().toUpperCase();
         System.out.println("\nParticipantes: ");
         int participantes = scanner.nextInt();
 
@@ -97,43 +107,99 @@ public class MainMisterBet {
         }
 
     }
-    public static void incluiTime(Scanner scanner){
+
+    public static void subMenu1(MisterBetController mrBet, Scanner scanner){
         System.out.println("\n(I)ncluir time em campeonato ou (V)erificar se time está em campeonato? ");
+        scanner = new Scanner(System.in);
         String opcao = scanner.nextLine();
 
-        if(opcao.equals("I")){
+        if(opcao.equals("I") || opcao.equals("i")){
             System.out.println("\nCampeonato: ");
-            String campeonato = scanner.nextLine();
+            String campeonato = scanner.nextLine().toUpperCase();
             System.out.println("\nCódigo do Time: ");
-            String time = scanner.nextLine();
-        } else if(opcao.equals("V")){
+            String codigo = scanner.nextLine().toUpperCase();
+
+            try{
+                System.out.println(mrBet.incluiTime(campeonato, codigo));
+            }catch (NullPointerException e){
+                System.out.println(e.getMessage());
+            }
+
+        } else if(opcao.equals("V") || opcao.equals("v")){
             System.out.println("\nCódigo do Time: ");
-            String time = scanner.nextLine();
+            String codigo = scanner.nextLine().toUpperCase();
             System.out.println("\nCampeonato: ");
-            String campeonato = scanner.nextLine();
+            String campeonato = scanner.nextLine().toUpperCase();
+
+            try{
+                System.out.println(mrBet.verificaTimeCampeonato(codigo, campeonato));
+            } catch (NullPointerException e){
+                System.out.println(e.getMessage());
+            }
+
         }
-
     }
-    public static void exibeCampeonatosDoTime(Scanner scanner){
+
+    public static void exibeCampeonatosDoTime(MisterBetController mrBet, Scanner scanner){
         System.out.println("\nTime: ");
-        String time = scanner.nextLine();
-    }
-    public static void aposta(Scanner scanner){
-        System.out.println("(A)postar ou (S)tatus das Apostas? ");
-        String opcao = scanner.nextLine();
+        String time = scanner.next().toUpperCase();
 
-        if(opcao.equals("A")){
-            System.out.println("\nCódigo do Time: ");
-            String time = scanner.nextLine();
+        try{
+            System.out.println(mrBet.exibeCampeonatosTime(time));
+        } catch (NullPointerException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void subMenu2(MisterBetController mrBet, Scanner scanner){
+        System.out.println("\n(A)postar ou (S)tatus de Apostas? ");
+        scanner = new Scanner(System.in);
+        String opcao = scanner.next();
+
+        if(opcao.equals("A") || opcao.equals("a")){
+            System.out.println("\nCódigo: ");
+            String codigo = scanner.next().toUpperCase();
             System.out.println("\nCampeonato: ");
-            String campeonato = scanner.nextLine();
+            scanner = new Scanner(System.in);
+            String campeonato = scanner.nextLine().toUpperCase();
             System.out.println("\nColocação: ");
+            scanner = new Scanner(System.in);
             int colocacao = scanner.nextInt();
             System.out.println("\nValor da aposta: ");
             double valor = scanner.nextDouble();
-        }else if (opcao.equals("S")){
 
+            try{
+                System.out.println(mrBet.aposta(codigo, campeonato, colocacao, valor));
+            } catch (NullPointerException e){
+                System.out.println(e.getMessage());
+            }
         }
+
+        if(opcao.equals("S") || opcao.equals("s")){
+            try{
+                System.out.println(mrBet.statusApostas());
+            } catch (NullPointerException e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public static void historico(MisterBetController mrBet){
+
+        try {
+            System.out.println("Participação mais frequente em campeonatos");
+            System.out.println(mrBet.participacaoMaisFrequente());
+
+            System.out.println("Ainda não participou de campoenato");
+            System.out.println(mrBet.naoParticipouDeCampeonato());
+
+            System.out.println("Popularidade em apostas");
+            System.out.println(mrBet.popularidadeEmApostas());
+
+        }catch (IllegalArgumentException e){
+            System.out.println(e.getMessage());
+        }
+
     }
 
     public static void sai(){
