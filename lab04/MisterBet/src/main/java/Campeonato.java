@@ -43,8 +43,11 @@ public class Campeonato {
             return "TODOS OS TIMES DESSE CAMPEONATO JÁ FORAM INCLUÍDOS";
         }
 
-        times[qtdAtualParticipantes++] = time;
-        time.adicionaCampeonato(campeonato);
+        if(verificaTime(time).equals("O TIME NÃO ESTÁ NO CAMPEONATO!")){
+            times[qtdAtualParticipantes++] = time;
+            time.adicionaCampeonato(campeonato);
+        }
+
         return "TIME INCLUÍDO NO CAMPEONATO!";
     }
 

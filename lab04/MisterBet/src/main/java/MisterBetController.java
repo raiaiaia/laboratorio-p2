@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Locale;
 
 /**
  *  Classe que implementa o Sistema Mr.Bet.
@@ -69,7 +70,7 @@ public class MisterBetController {
     private Campeonato getCampeonato(String nome){
         Campeonato c1 = null;
         for(Campeonato c: campeonatos){
-            if(c.getNome().toUpperCase().equals(nome)){
+            if(c.getNome().toUpperCase().equalsIgnoreCase(nome)){
                 c1 = c;
             }
         }
@@ -85,11 +86,12 @@ public class MisterBetController {
     public String incluiTime(String campeonato, String codigo){
         Campeonato c1 = getCampeonato(campeonato);
         if(c1 == null){
-            throw new NullPointerException("CAMPEONATO NÃO EXISTE!");
+            return "CAMPEONATO NÃO EXISTE!";
         }
         if(times.get(codigo) == null){
-            throw new NullPointerException("TIME NÃO EXISTE!");
+            return "TIME NÃO EXISTE!";
         }
+
         return c1.adicionaTime(c1, times.get(codigo));
     }
 
