@@ -157,6 +157,9 @@ public class MisterBetController {
         if(colocacao > participantesCampeonato){
             return "APOSTA NÃO REGITRADA!";
         }
+        if(colocacao == 1){
+            time.setPopularidadeApostas();
+        }
 
         Aposta novaAposta = new Aposta(codigoTime, nomeTime, mascoteTime, nomeCampeonato, participantesCampeonato, colocacao, valor);
         apostas.add(novaAposta);
@@ -192,13 +195,13 @@ public class MisterBetController {
             if(t.getQtdCampeonatos() > 0 && t.getQtdCampeonatos() >= maiorAtual){
                 maiorAtual = t.getQtdCampeonatos();
                 maiorFrequencia =  t;
-                saida = t + "   - " + t.getQtdCampeonatos() +" campeonatos" + "\n";
+                saida = t + "  - " + t.getQtdCampeonatos() +" campeonatos" + "\n";
             }
         }
 
         for(Time t: times.values()){
             if(t.getQtdCampeonatos() == maiorAtual && !(t.equals(maiorFrequencia))){
-                saida += t + "   - " + t.getQtdCampeonatos() + " campeonatos"+ "\n";
+                saida += t + "  - " + t.getQtdCampeonatos() + " campeonatos"+ "\n";
             }
         }
 
@@ -225,11 +228,16 @@ public class MisterBetController {
      * Método que compõe o Histórico.
      * Exibe o(s) time(s) que mais tiveram apostas em primeira colocação
      * e a quantidade de vezes que foram adicionados a esta posição.
-     * @return uma lista com todos os times que tiveram maior popularidade
+     * @return uma lista com todos os times que tiveram maior popularidade.
      */
     public String popularidadeEmApostas(){
         String saida = "";
-        
+
+        for(Time t: times.values()){
+            if(t.getPopularidadeApostas() >= 1){
+                saida += t.getNome() + " / " + t.getPopularidadeApostas() + "\n";
+            }
+        }
         return saida;
     }
 

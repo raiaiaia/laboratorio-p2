@@ -102,7 +102,7 @@ public class MainMisterBet {
 
         try{
             System.out.println(mrBet.adicionaCampeonato(campeonato, participantes));
-        } catch (NullPointerException e){
+        } catch (NullPointerException | IllegalArgumentException e){
             System.out.println(e.getMessage());
         }
 
