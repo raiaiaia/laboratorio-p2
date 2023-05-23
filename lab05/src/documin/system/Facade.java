@@ -1,4 +1,4 @@
-package documin;
+package documin.system;
 
 import documin.document.DocumentController;
 
@@ -11,15 +11,15 @@ public class Facade {
     public boolean criarDocumento(String titulo) {
         return this.documentoController.criarDocumento(titulo);
     }
-    boolean criarDocumento(String titulo, int tamanhoMaximo){
+    public boolean criarDocumento(String titulo, int tamanhoMaximo){
         return false;
     }
-    void removerDocumento(String titulo){}
+    public void removerDocumento(String titulo){}
 
-    int contarElementos(String titulo){
+    public int contarElementos(String titulo){
         return 0;
     }
-    String[] exibirDocumento(String titulo){
+    public String[] exibirDocumento(String titulo){
         return new String[0];
     }
 

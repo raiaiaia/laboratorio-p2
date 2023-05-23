@@ -1,4 +1,4 @@
-package documin.document;
+package documin.validators;
 
 public class DocumentValidator {
     public static void validaTamanho(int tamanho){

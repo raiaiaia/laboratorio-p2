@@ -1,5 +1,8 @@
 package documin.document;
 
+import documin.elements.Element;
+import documin.validators.DocumentValidator;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
